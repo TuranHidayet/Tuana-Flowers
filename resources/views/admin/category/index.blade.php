@@ -9,9 +9,7 @@
     <section class="content">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">{{__('categories')}}</h3>
-
-                <a href="" class="btn btn-sm btn-warning mr-auto ml-5">Create</a>
+                <a href="{{route('admin.category.create')}}" class="btn btn-sm btn-warning mr-auto">Create Category</a>
 
 
                 <div class="card-tools">
@@ -22,64 +20,40 @@
                 </div>
             </div>
             <div class="card-body">
-                <table id="usersTable" class="table table-bordered table-hover table-stripped">
+                <table id="contactTable" class="table table-bordered table-hover table-stripped">
                     <thead>
-                    <tr>
-                        <th>Rendering engine</th>
-                        <th>Browser</th>
-                        <th>Platform(s)</th>
-                        <th>Engine version</th>
-                        <th>CSS grade</th>
+                    <tr class="text-center">
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Status</th>
+                        <th>Operations</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>Trident</td>
-                        <td>Internet
-                            Explorer 4.0
-                        </td>
-                        <td>Win 95+</td>
-                        <td> 4</td>
-                        <td>X</td>
-                    </tr>
-                    <tr>
-                        <td>Trident</td>
-                        <td>Internet
-                            Explorer 5.0
-                        </td>
-                        <td>Win 95+</td>
-                        <td>5</td>
-                        <td>C</td>
-                    </tr>
-                    <tr>
-                        <td>Trident</td>
-                        <td>Internet
-                            Explorer 5.5
-                        </td>
-                        <td>Win 95+</td>
-                        <td>5.5</td>
-                        <td>A</td>
-                    </tr>
-                    <tr>
-                        <td>Trident</td>
-                        <td>Internet
-                            Explorer 6
-                        </td>
-                        <td>Win 98+</td>
-                        <td>6</td>
-                        <td>A</td>
-                    </tr>
+                    @foreach($categories as $key => $category)
+                        <tr>
+                            <th>{{ $key + 1 }}</th>
+                            <td>{{ is_array($category->name) ? implode(', ', $category->name) : $category->name }}</td>
 
+                            <td class="text-center">
+                                @if($category->status)
+                                    <span class="badge badge-pill badge-success">Active</span>
+                                @else
+                                    <span class="badge badge-pill badge-danger">No Active</span>
+                                @endif
+                            </td>
+
+                            <td class="d-flex ">
+                                @if(!$category->status)
+                                    <a href="{{route('admin.category.change', ['id'=>$category->id])}}" onclick="confirm('Are you sure to change the status?')" class="btn btn-sm btn-info">Change</a>
+                                @endif
+                                    <a href="javascript:void(0);"
+                                       onclick="deleteCategory('{{ route('admin.category.destroy', ['id' => $category->id]) }}')"
+                                       class="btn btn-sm btn-danger ml-2">Delete</a>
+                            </td>
+                        </tr>
+                    @endforeach
                     </tbody>
-                    <tfoot>
-                    <tr>
-                        <th>Rendering engine</th>
-                        <th>Browser</th>
-                        <th>Platform(s)</th>
-                        <th>Engine version</th>
-                        <th>CSS grade</th>
-                    </tr>
-                    </tfoot>
                 </table>
             </div>
             <div class="card-footer">
@@ -96,5 +70,25 @@
             $('#usersTable').DataTable();
         });
     </script>
+
+    <script>
+        function deleteCategory(url) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't delete this Category!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = url;
+                }
+            });
+        }
+    </script>
 @endsection
+
 

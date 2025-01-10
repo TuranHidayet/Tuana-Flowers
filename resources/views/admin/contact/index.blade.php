@@ -5,14 +5,10 @@
 @section('content')
 
     @include('admin.partials.breadcrumb', ['title' => 'Contact'])
-
+<div class="m-4">
     <section class="content">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">{{__('Contact')}}</h3>
-
-                <a href="" class="btn btn-sm btn-warning mr-auto ml-5">Create</a>
-
                 <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
                         <i class="fas fa-minus"></i></button>
@@ -23,60 +19,52 @@
             <div class="card-body">
                 <table id="contactTable" class="table table-bordered table-hover table-stripped">
                     <thead>
-                    <tr>
-                        <th>Rendering engine</th>
-                        <th>Browser</th>
-                        <th>Platform(s)</th>
-                        <th>Engine version</th>
-                        <th>CSS grade</th>
+                    <tr class="text-center">
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Subject</th>
+                        <th>Message</th>
+                        <th>Status</th>
                     </tr>
                     </thead>
                     <tbody>
+                    @foreach($contacts as $key => $contact)
                     <tr>
-                        <td>Trident</td>
-                        <td>Internet
-                            Explorer 4.0
+                        <th>{{$key+1}}</th>
+                        <td>{{$contact->name}}</td>
+                        <td>{{$contact->email}}</td>
+                        <td>{{$contact->phone}}</td>
+                        <td>{{$contact->subject}}</td>
+                        <td>{{$contact->message}}</td>
+                        <td>
+                            @if($contact->status)
+                                <span class="badge badge-pill badge-success">Read</span>
+                            @else
+                                <span class="badge badge-pill badge-danger">Unread</span>
+                            @endif
                         </td>
-                        <td>Win 95+</td>
-                        <td> 4</td>
-                        <td>X</td>
-                    </tr>
-                    <tr>
-                        <td>Trident</td>
-                        <td>Internet
-                            Explorer 5.0
+                        <td class="d-flex ">
+                            @if(!$contact->status)
+                                <a href="{{route('admin.contact.read', ['id'=>$contact->id])}}" onclick="confirm('Are you sure to change status?')" class="btn btn-sm btn-info">Read</a>
+                            @endif
+                                <a href="javascript:void(0);"
+                                   onclick="deleteCategory('{{ route('admin.contact.destroy', ['id' => $contact->id]) }}')"
+                                   class="btn btn-sm btn-danger ml-2">Delete</a>
                         </td>
-                        <td>Win 95+</td>
-                        <td>5</td>
-                        <td>C</td>
                     </tr>
-                    <tr>
-                        <td>Trident</td>
-                        <td>Internet
-                            Explorer 5.5
-                        </td>
-                        <td>Win 95+</td>
-                        <td>5.5</td>
-                        <td>A</td>
-                    </tr>
-                    <tr>
-                        <td>Trident</td>
-                        <td>Internet
-                            Explorer 6
-                        </td>
-                        <td>Win 98+</td>
-                        <td>6</td>
-                        <td>A</td>
-                    </tr>
-
+                    @endforeach
                     </tbody>
                     <tfoot>
-                    <tr>
-                        <th>Rendering engine</th>
-                        <th>Browser</th>
-                        <th>Platform(s)</th>
-                        <th>Engine version</th>
-                        <th>CSS grade</th>
+                    <tr class="text-center">
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Subject</th>
+                        <th>Message</th>
+                        <th>Status</th>
                     </tr>
                     </tfoot>
                 </table>
@@ -86,13 +74,38 @@
             </div>
         </div>
     </section>
-
+</div>
 @endsection
+
+
 
 @section('customJs')
     <script>
         $(function () {
             $('#contactTable').DataTable();
         });
+    </script>
+
+    <script>
+        var contactId = @json($contact->id);
+    </script>
+
+    <script>
+        function deleteCategory(url) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't delete this Message!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = url;
+                }
+            });
+        }
     </script>
 @endsection

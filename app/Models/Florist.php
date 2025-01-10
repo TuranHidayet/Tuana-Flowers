@@ -8,5 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Florist extends Model
 {
     use HasFactory;
-    protected $guarded = ['id'];
+    protected $fillable = [
+        'name',
+        'florist_avatar',
+        'email',
+        'phone',
+        'address',
+    ];
 }

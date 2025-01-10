@@ -28,7 +28,7 @@ class ProductRequest extends FormRequest
             'florist_id' => 'required|exists:florists,id',
             'price' => 'required|numeric|min:0',
             'description' => 'nullable|string',
-            'stock' => 'required|integer|min:0',
+            'stock' => 'required|integer',
         ];
     }
 }

@@ -9,9 +9,7 @@
     <section class="content">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">{{__('Users')}}</h3>
-
-                <a href="" class="btn btn-sm btn-warning mr-auto ml-5">Create</a>
+                <a href="" class="btn btn-sm btn-warning mr-auto">Create</a>
 
 
                 <div class="card-tools">
@@ -24,60 +22,48 @@
             <div class="card-body">
                 <table id="usersTable" class="table table-bordered table-hover table-stripped">
                     <thead>
-                    <tr>
-                        <th>Rendering engine</th>
-                        <th>Browser</th>
-                        <th>Platform(s)</th>
-                        <th>Engine version</th>
-                        <th>CSS grade</th>
+                    <tr class="text-center">
+                        <th>#</th>
+                        <th>Avatar</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Show</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>Trident</td>
-                        <td>Internet
-                            Explorer 4.0
-                        </td>
-                        <td>Win 95+</td>
-                        <td> 4</td>
-                        <td>X</td>
-                    </tr>
-                    <tr>
-                        <td>Trident</td>
-                        <td>Internet
-                            Explorer 5.0
-                        </td>
-                        <td>Win 95+</td>
-                        <td>5</td>
-                        <td>C</td>
-                    </tr>
-                    <tr>
-                        <td>Trident</td>
-                        <td>Internet
-                            Explorer 5.5
-                        </td>
-                        <td>Win 95+</td>
-                        <td>5.5</td>
-                        <td>A</td>
-                    </tr>
-                    <tr>
-                        <td>Trident</td>
-                        <td>Internet
-                            Explorer 6
-                        </td>
-                        <td>Win 98+</td>
-                        <td>6</td>
-                        <td>A</td>
-                    </tr>
-
+                    @foreach($users as $key => $user)
+                        <tr>
+                            <td>{{$key + 1}}</td>
+                            <td><img src="{{Storage::url($user->avatar)}}" alt="{{$user->first_name}}" width="100" height="70"></td>
+                            <td>{{$user->first_name}}</td>
+                            <td>{{$user->last_name}}</td>
+                            <td>{{$user->email}}</td>
+                            <td>{{$user->phone}}</td>
+                            <td>
+                                <a href="{{route('admin.users.show', ['id'=>$user->id])}}" class="btn btn-sm btn-danger ml-2">Show</a>
+                                @if($user->role == 'user')
+                                    <form action="{{route('admin.users.makeAdmin', $user->id)}}" method="POST" style="display: inline;">
+                                        @csrf
+                                        <button type="submit" class="btn btn-sm btn-success ml-2">Make Admin</button>
+                                    </form>
+                                @else
+                                    <span class="badge badge-info ml-2">Admin</span>
+                                @endif
+                            </td>
+                        </tr>
+                    @endforeach
                     </tbody>
                     <tfoot>
-                    <tr>
-                        <th>Rendering engine</th>
-                        <th>Browser</th>
-                        <th>Platform(s)</th>
-                        <th>Engine version</th>
-                        <th>CSS grade</th>
+                    <tr class="text-center">
+                        <th>#</th>
+                        <th>Avatar</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Show</th>
                     </tr>
                     </tfoot>
                 </table>
@@ -96,4 +82,5 @@
             $('#usersTable').DataTable();
         });
     </script>
+
 @endsection

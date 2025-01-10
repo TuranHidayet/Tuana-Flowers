@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('product_image')->nullable();
             $table->decimal('price', 10, 2);
             $table->text('description')->nullable();
-            $table->integer('stock')->default(0);
+
             $table->timestamps();
 
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');

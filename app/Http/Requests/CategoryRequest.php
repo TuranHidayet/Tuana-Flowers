@@ -22,9 +22,7 @@ class CategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|array',
-            'name.az' => 'nullable|string',
-            'name.en' => 'required|string',
+            'name' => 'nullable|string',
             'status' => 'boolean|nullable',
         ];
     }

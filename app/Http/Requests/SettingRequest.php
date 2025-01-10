@@ -31,8 +31,6 @@ class SettingRequest extends FormRequest
             'meta_title' => 'nullable|string|max:50',
             'meta_description' => 'nullable|string',
             'meta_keywords' => 'nullable|string',
-            'about_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:1024',
-            'slider_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:1024',
             'set_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:1024',
             'instagram' => 'nullable|url|max:50',
             'facebook' => 'nullable|url|max:50',

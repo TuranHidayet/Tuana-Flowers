@@ -1,26 +1,24 @@
 <header class="ltn__header-area ltn__header-3 section-bg-6">
-    <!-- ltn__header-middle-area start -->
     <div class="ltn__header-middle-area">
         <div class="container">
             <div class="row">
                 <div class="col">
                     <div class="site-logo">
-                        <a href="index.html"><img src="img/logo.png" alt="Logo"></a>
+                        <a href="{{route('app.home')}}"><img src="{{ asset('front/img/logo.png') }}" alt="Logo"></a>
+
                     </div>
                 </div>
                 <div class="col header-contact-serarch-column d-none d-xl-block">
                     <div class="header-contact-search">
-                        <!-- header-feature-item -->
                         <div class="header-feature-item">
                             <div class="header-feature-icon">
                                 <i class="icon-phone"></i>
                             </div>
                             <div class="header-feature-info">
                                 <h6>Phone</h6>
-                                <p><a href="tel:0123456789">+0123-456-789</a></p>
+                                <p><a href="tel:+994519489523">{{$settings->phone}}</a></p>
                             </div>
                         </div>
-                        <!-- header-search-2 -->
                         <div class="header-search-2">
                             <form id="#123" method="get"  action="#">
                                 <input type="text" name="search" value="" placeholder="Search here..."/>
@@ -32,17 +30,15 @@
                     </div>
                 </div>
                 <div class="col">
-                    <!-- header-options -->
                     <div class="ltn__header-options">
                         <ul>
                             <li class="d-none">
-                                <!-- ltn__currency-menu -->
                                 <div class="ltn__drop-menu ltn__currency-menu">
                                     <ul>
                                         <li><a href="#" class="dropdown-toggle"><span class="active-currency">USD</span></a>
                                             <ul>
-                                                <li><a href="login.html">USD - US Dollar</a></li>
-                                                <li><a href="wishlist.html">CAD - Canada Dollar</a></li>
+                                                <li><a href="">USD - US Dollar</a></li>
+                                                <li><a href="">CAD - Canada Dollar</a></li>
                                                 <li><a href="register.html">EUR - Euro</a></li>
                                                 <li><a href="account.html">GBP - British Pound</a></li>
                                                 <li><a href="wishlist.html">INR - Indian Rupee</a></li>
@@ -55,7 +51,6 @@
                                 </div>
                             </li>
                             <li class="d-none">
-                                <!-- header-search-1 -->
                                 <div class="header-search-wrap">
                                     <div class="header-search-1">
                                         <div class="search-icon">
@@ -74,7 +69,6 @@
                                 </div>
                             </li>
                             <li class="d-none">
-                                <!-- user-menu -->
                                 <div class="ltn__drop-menu user-menu">
                                     <ul>
                                         <li>
@@ -90,19 +84,21 @@
                                 </div>
                             </li>
                             <li>
-                                <!-- mini-cart 2 -->
                                 <div class="mini-cart-icon mini-cart-icon-2">
                                     <a href="#ltn__utilize-cart-menu" class="ltn__utilize-toggle">
-                                            <span class="mini-cart-icon">
-                                                <i class="icon-handbag"></i>
-                                                <sup>2</sup>
-                                            </span>
-                                        <h6><span>Your Cart</span> <span class="ltn__secondary-color">$89.25</span></h6>
+                                        <span class="mini-cart-icon">
+                                            <i class="icon-handbag"></i>
+                                            <sup id="cart-count">0</sup>
+                                        </span>
+                                        <h6>
+                                            <span>Your Cart</span>
+                                            <span class="ltn__secondary-color" id="cart-total-price">$0.00</span>
+                                        </h6>
                                     </a>
                                 </div>
                             </li>
+
                             <li>
-                                <!-- Mobile Menu Button -->
                                 <div class="mobile-menu-toggle d-lg-none">
                                     <a href="#ltn__utilize-mobile-menu" class="ltn__utilize-toggle">
                                         <svg viewBox="0 0 800 600">
@@ -119,106 +115,34 @@
             </div>
         </div>
     </div>
-    <!-- ltn__header-middle-area end -->
 
-    <!-- header-bottom-area start -->
     <div class="header-bottom-area ltn__border-top ltn__header-sticky  ltn__sticky-bg-white ltn__primary-bg---- menu-color-white---- d-none d-lg-block">
         <div class="container">
             <div class="row">
                 <div class="col header-menu-column justify-content-center">
                     <div class="sticky-logo">
                         <div class="site-logo">
-                            <a href="index.html"><img src="img/logo.png" alt="Logo"></a>
+                            <a href="{{route('app.home')}}"><img src="{{asset('front/img/logo.png')}}" alt="Logo"></a>
                         </div>
                     </div>
                     <div class="header-menu header-menu-2">
                         <nav>
                             <div class="ltn__main-menu">
                                 <ul>
-                                    <li class="menu-icon"><a href="#">Home</a>
-                                        <ul>
-                                            <li><a href="index.html">Home Style - 01</a></li>
-                                            <li><a href="index-2.html">Home Style - 02</a></li>
-                                            <li><a href="index-3.html">Home Style - 03</a></li>
-                                            <li><a href="index-4.html">Home Style - 04</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="menu-icon"><a href="#">Pages</a>
-                                        <ul class="mega-menu">
-                                            <li><a href="#">Inner Pages</a>
-                                                <ul>
-                                                    <li><a href="about.html">About Us</a></li>
-                                                    <li><a href="portfolio.html">Portfolio</a></li>
-                                                    <li><a href="portfolio-2.html">Portfolio - 02</a></li>
-                                                    <li><a href="portfolio-details.html">Portfolio Details</a></li>
-                                                    <li><a href="faq.html">FAQ</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a href="#">Inner Pages</a>
-                                                <ul>
-                                                    <li><a href="locations.html">Google Map Locations</a></li>
-                                                    <li><a href="404.html">404</a></li>
-                                                    <li><a href="contact.html">Contact</a></li>
-                                                    <li><a href="coming-soon.html">Coming Soon</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a href="#">Shop Pages</a>
-                                                <ul>
-                                                    <li><a href="shop.html">Shop</a></li>
-                                                    <li><a href="shop-grid.html">Shop Grid</a></li>
-                                                    <li><a href="shop-left-sidebar.html">Shop Left sidebar</a></li>
-                                                    <li><a href="shop-right-sidebar.html">Shop right sidebar</a></li>
-                                                    <li><a href="product-details.html">Shop details </a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a href="#">Blog Pages</a>
-                                                <ul>
-                                                    <li><a href="blog.html">News</a></li>
-                                                    <li><a href="blog-grid.html">News Grid</a></li>
-                                                    <li><a href="blog-left-sidebar.html">News Left sidebar</a></li>
-                                                    <li><a href="blog-right-sidebar.html">News Right sidebar</a></li>
-                                                    <li><a href="blog-details.html">News details</a></li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li class="menu-icon"><a href="#">Shop</a>
-                                        <ul>
-                                            <li><a href="shop.html">Shop</a></li>
-                                            <li><a href="shop-grid.html">Shop Grid</a></li>
-                                            <li><a href="shop-left-sidebar.html">Shop Left sidebar</a></li>
-                                            <li><a href="shop-right-sidebar.html">Shop right sidebar</a></li>
-                                            <li><a href="product-details.html">Shop details </a></li>
-                                            <li><a href="#">Other Pages <span class="float-right">>></span></a>
-                                                <ul>
-                                                    <li><a href="cart.html">Cart</a></li>
-                                                    <li><a href="wishlist.html">Wishlist</a></li>
-                                                    <li><a href="checkout.html">Checkout</a></li>
-                                                    <li><a href="order-tracking.html">Order Tracking</a></li>
-                                                    <li><a href="account.html">My Account</a></li>
-                                                    <li><a href="login.html">Sign in</a></li>
-                                                    <li><a href="register.html">Register</a></li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li class="menu-icon"><a href="#">Portfolio</a>
-                                        <ul>
-                                            <li><a href="portfolio.html">Portfolio</a></li>
-                                            <li><a href="portfolio-2.html">Portfolio - 02</a></li>
-                                            <li><a href="portfolio-details.html">Portfolio Details</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="menu-icon"><a href="#">News</a>
-                                        <ul>
-                                            <li><a href="blog.html">News</a></li>
-                                            <li><a href="blog-grid.html">News Grid</a></li>
-                                            <li><a href="blog-left-sidebar.html">News Left sidebar</a></li>
-                                            <li><a href="blog-right-sidebar.html">News Right sidebar</a></li>
-                                            <li><a href="blog-details.html">News details</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="contact.html">Contact</a></li>
+                                    <li class="menu-icon"><a href="{{ route('app.home') }}">Home</a></li>
+
+                                    <li class="menu-icon"><a href="{{route('app.shops.index')}}">Shops</a></li>
+                                    <li class="menu-icon"><a href="{{ route('app.florists') }}">Florists</a></li>
+
+                                    <li class="menu-icon"><a href="{{ route('app.contact') }}">Contact</a></li>
+                                    @if(Auth::check())
+                                        <li class="menu-icon"><a href="{{ route('app.profile') }}">Profile</a></li>
+                                        <li class="menu-icon"><a href="{{ route('app.logout') }}">Logout</a></li>
+
+                                    @else
+                                        <li class="menu-icon"><a href="{{ route('app.login') }}">Login</a></li>
+                                        <li class="menu-icon"><a href="{{ route('app.register') }}">Register</a></li>
+                                    @endif
                                 </ul>
                             </div>
                         </nav>
@@ -227,5 +151,4 @@
             </div>
         </div>
     </div>
-    <!-- header-bottom-area end -->
 </header>

@@ -6,9 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class ContactRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
+
     public function authorize(): bool
     {
         return true;
@@ -23,7 +21,7 @@ class ContactRequest extends FormRequest
     {
         return [
             'name' => 'nullable|string|max:50',
-            'email' => 'required|email|unique:users,email',
+            'email' => 'required|email|max:50',
             'subject'=> 'nullable|string|max:100',
             'message'=> 'nullable|string|max:500',
             'status'=> 'nullable|boolean',

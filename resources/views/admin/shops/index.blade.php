@@ -9,9 +9,6 @@
     <section class="content">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">{{__('Shops')}}</h3>
-
-                <a href="" class="btn btn-sm btn-warning mr-auto ml-5">Create</a>
 
                 <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
@@ -24,59 +21,42 @@
                 <table id="contactTable" class="table table-bordered table-hover table-stripped">
                     <thead>
                     <tr>
-                        <th>Rendering engine</th>
-                        <th>Browser</th>
-                        <th>Platform(s)</th>
-                        <th>Engine version</th>
-                        <th>CSS grade</th>
+                        <th>#</th>
+                        <th>Logo</th>
+                        <th>Shop Name</th>
+                        <th>Description</th>
+                        <th>phone</th>
+                        <th>email</th>
+                        <th>Address</th>
                     </tr>
                     </thead>
                     <tbody>
+                    @foreach($shops as $key => $shop)
                     <tr>
-                        <td>Trident</td>
-                        <td>Internet
-                            Explorer 4.0
+                        <th>{{ $key + 1 }}</th>
+                        <td><img src="{{Storage::url($shop->logo)}}" alt="{{$shop->name}}" width="100" height="70"></td>
+                        <td>{{$shop->name}}</td>
+                        <td>{{$shop->description}}</td>
+                        <td>{{$shop->phone}}</td>
+                        <td>{{$shop->email}}</td>
+                        <td>{{$shop->address}}</td>
+
+                        <td class="d-flex">
+                            <a href="{{ route('admin.shops.show', ['id'=>$shop->id]) }}" class="btn btn-sm btn-info">Show</a>
                         </td>
-                        <td>Win 95+</td>
-                        <td> 4</td>
-                        <td>X</td>
                     </tr>
-                    <tr>
-                        <td>Trident</td>
-                        <td>Internet
-                            Explorer 5.0
-                        </td>
-                        <td>Win 95+</td>
-                        <td>5</td>
-                        <td>C</td>
-                    </tr>
-                    <tr>
-                        <td>Trident</td>
-                        <td>Internet
-                            Explorer 5.5
-                        </td>
-                        <td>Win 95+</td>
-                        <td>5.5</td>
-                        <td>A</td>
-                    </tr>
-                    <tr>
-                        <td>Trident</td>
-                        <td>Internet
-                            Explorer 6
-                        </td>
-                        <td>Win 98+</td>
-                        <td>6</td>
-                        <td>A</td>
-                    </tr>
+                    @endforeach
 
                     </tbody>
                     <tfoot>
                     <tr>
-                        <th>Rendering engine</th>
-                        <th>Browser</th>
-                        <th>Platform(s)</th>
-                        <th>Engine version</th>
-                        <th>CSS grade</th>
+                        <th>#</th>
+                        <th>Logo</th>
+                        <th>Shop Name</th>
+                        <th>Description</th>
+                        <th>phone</th>
+                        <th>email</th>
+                        <th>Address</th>
                     </tr>
                     </tfoot>
                 </table>
@@ -95,6 +75,7 @@
             $('#contactTable').DataTable();
         });
     </script>
+
 @endsection
 
 

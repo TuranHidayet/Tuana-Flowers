@@ -24,7 +24,7 @@ class FloristRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'florist_avatar' => 'nullable|image|mimes:jpeg,png,jpg,svg|max:1024',
-            'email' => 'required|email|unique:florists,email',
+            'email' => 'required|email|unique:florists,email,' . $this->route('id'),
             'phone' => 'nullable|string|max:15',
             'address' => 'nullable|string',
         ];

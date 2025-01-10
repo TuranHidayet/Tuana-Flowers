@@ -11,7 +11,7 @@ class OrderRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,22 @@ class OrderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'product_id' => 'required|exists:products,id',
+            'quantity' => 'required|integer|min:1',
+            'delivery_address' => 'required|string|max:255',
+            'phone' => 'required|string|max:20',
+            'notes' => 'nullable|string',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'product_id.required' => 'Məhsul seçimi vacibdir.',
+            'product_id.exists' => 'Seçilən məhsul mövcud deyil.',
+            'quantity.required' => 'Məhsul miqdarı qeyd olunmalıdır.',
+            'delivery_address.required' => 'Çatdırılma ünvanı qeyd olunmalıdır.',
+            'phone.required' => 'Əlaqə nömrəsi qeyd olunmalıdır.',
         ];
     }
 }

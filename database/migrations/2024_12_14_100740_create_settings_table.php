@@ -22,7 +22,7 @@ return new class extends Migration
             $table->text('meta_title')->nullable();
             $table->text('meta_description')->nullable();
             $table->text('meta_keywords')->nullable();
-            $table->string('about_image')->nullable();
+            $table->string('set_image')->nullable();
             $table->string('instagram')->nullable();
             $table->string('facebook')->nullable();
             $table->string('twitter')->nullable();

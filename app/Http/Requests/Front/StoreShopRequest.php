@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Front;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ShopRequest extends FormRequest
+class StoreShopRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,14 +23,12 @@ class ShopRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'shop_image' => 'nullable|image|mimes:jpeg,png,jpg,svg|max:1024',
             'description' => 'nullable|string',
-            'address' => 'required|string|max:255',
-            'phone' => 'required|string|max:20',
+            'address' => 'nullable|string|max:255',
+            'phone' => 'nullable|string|max:20',
             'email' => 'nullable|email|max:255',
-            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'status' => 'required|in:active,inactive',
+            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:1024',
+            'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:1024',
         ];
     }
 }
