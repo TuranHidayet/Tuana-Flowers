@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -32,6 +33,15 @@ class CategoryController extends Controller
         return redirect()->route('admin.category.index')->with('success', 'Category created successfully');
 
     }
+
+    public function show(string $id)
+    {
+        $categories = Category::all();
+        $category = Category::with('products')->findOrFail($id);
+        $products = Product::where('category_id', $category->id)->get();
+        return view('front.category.index', compact('category', 'products', 'categories'));
+    }
+
 
     public function change(string $id)
     {

@@ -44,28 +44,54 @@ class ShopController extends Controller
             $validated['logo'] = Storage::putFile('public/uploads/shops/logos', $request->file('logo'));
         }
 
-        if ($request->hasFile('cover_image')) {
-            $validated['cover_image'] = Storage::putFile('public/uploads/shops/covers', $request->file('cover_image'));
-        }
 
-        $shop = Shop::create($validated);
+        Shop::create($validated);
 
         return redirect()->route('app.shops.index')->with('success', 'Mağaza uğurla yaradıldı!');
     }
 
 
-
-
     public function show($slug)
     {
 
-        $products = Product::where('stock', 'active')->get();
-
         $shop = Shop::where('slug', $slug)->first();
+        $products = Product::where('shop_id', $shop->id)->get();
 
         if(!$shop)
             abort(404);
 
         return view('front.shops.show', compact('shop', 'products'));
+    }
+
+
+    public function edit(string $id)
+    {
+        $shop = Shop::findOrFail($id);
+        return view('front.shops.edit', compact('shop'));
+    }
+    public function update(StoreShopRequest $request, string $id)
+    {
+        $shop = Shop::findOrFail($id);
+        $validated = $request->validated();
+
+        if ($request->hasFile('logo')) {
+            if ($shop->logo) Storage::delete($shop->logo);
+            $validated['logo'] = $request->file('logo')->store('uploads/shops/logos', 'public');
+        }
+        $shop->update($validated);
+        return redirect()->route('app.shops.index')->with('success', 'Product updated successfully.');
+    }
+
+    public function destroy(string $id)
+    {
+        $shop = Shop::findOrFail($id);
+
+        if($shop->id){
+            Storage::delete($shop->logo);
+        }
+
+        $shop->delete();
+
+        return redirect()->route('app.profile')->with('success', 'Shop deleted successfully.');
     }
 }

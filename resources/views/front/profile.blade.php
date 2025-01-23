@@ -4,9 +4,16 @@
 
 @section('content')
 
-    <style>
+    {{--    <!-- Admin LTE 3 -->--}}
+    <link rel="stylesheet" href="{{ asset('admin/dist/css/adminlte.min.css') }}">
+    <!--Admin  Select2 -->
+    <link rel="stylesheet" href="{{asset('admin/plugins/select2/css/select2.min.css')}}">
+    <link rel="stylesheet" href="{{asset('admin/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
+<style>
         {{--        Profile CSS--}}
+
  body {
+
             background-color: #f8f9fa;
         }
 
@@ -68,9 +75,15 @@
         </div>
         <hr>
         <div class="text-center goProduct p-2">
-            <h5>Our Flower Products</h5>
-            <p>View Tuana flower products.</p>
-            <a href="{{ route('app.products.index') }}" class="btn btn-primary" id="products-button">Go to Products</a>
+
+            @if($userShops && $userShops->count() > 0)
+                <h5>Our Flower Products</h5>
+                <p>View Tuana flower products.</p>
+                <a href="{{ route('app.products.index') }}" class="btn btn-primary" id="products-button">Go to Products</a>
+            @else
+                <h5>Your haven't got a Shop</h5>
+                <a href="{{ route('app.shops.create') }}" class="btn btn-primary" id="create-shop-button">Create a Shop</a>
+            @endif
         </div>
     </div>
 </div>
@@ -84,9 +97,9 @@
              <div class="user-shops mt-4">
 
                          <div class="shop-info mb-4">
-                             <h4 class="shop-title"><span style="color: red ">{{ $shop->name }}</span></h4>
+                             <a  href="{{route('app.shops.show', ['slug' => $shop->slug] )}}"><h4 class="shop-title"><span style="color: red ">{{ $shop->name }}</span></h4></a>
                              <div class="profile-header">
-                                 <img src="{{ $shop->logo ? Storage::url($shop->logo) : asset('default-logo.png') }}" alt="Shop Logo" class="shop-logo">
+                                 <a  href="{{route('app.shops.show', ['slug' => $shop->slug] )}}"> <img   src="{{ $shop->logo ? Storage::url($shop->logo) : asset('default-logo.png') }}" alt="Shop Logo" class="shop-logo"></a>
                              </div>
 
                              <p class="shop-description">{{ $shop->description }}</p>
@@ -95,68 +108,23 @@
                                  <p><strong>Phone:</strong> {{ $shop->phone }}</p>
                                  <p><strong>Email:</strong> {{ $shop->email }}</p>
                              </div>
-
-                             <a href="{{ route('app.products.create') }}" class="btn btn-custom">Add Product</a>
+                             <div class="">
+                                 <a href="{{ route('app.products.create') }}" class="btn btn-sm btn-custom">Add Product</a>
+                                 <a href="{{ route('app.shops.edit', ['id'=>$shop->id]) }}" class="btn btn-sm btn-primary mx-2">Edit</a>
+                             </div>
                          </div>
              </div>
              @else
-                 <p>You have not created any shops yet.</p>
-                 <a href="{{ route('app.shops.create') }}" class="btn btn-primary">Create a Shop</a>
+                 <div class="create-shop-container mb-3">
+                     <div class="user-shops mt-4 text-center">
+                         <p>You have not created any shops yet.</p>
+                         <a href="{{ route('app.shops.create') }}" class="btn btn-primary">Create a Shop</a>
+                     </div>
+                 </div>
              @endif
          </div>
     @endforeach
     </div>
 </div>
-
-
-     <div class="row justify-content-center mt-5">
-                @foreach($userShop->products as $product)
-                    <div class="col-lg-3 col-md-4 col-sm-6 col-6">
-                        <div class="ltn__product-item text-center">
-                            <div class="product-img">
-                                <a href="{{ route('app.product_details', ['slug' => $product->slug]) }}">
-                                    <img src="{{ Storage::url($product->product_image) }}" alt="{{ $product->name }}">
-                                </a>
-                                <div class="product-badge">
-                                    <ul>
-                                        <li class="badge-1">{{ $userShop->name }}</li>
-                                    </ul>
-                                </div>
-                                <div class="product-hover-action product-hover-action-2">
-                                    <ul>
-                                        <li>
-                                            <a href="#" title="Quick View" data-bs-toggle="modal" data-bs-target="#quick_view_modal">
-                                                <i class="icon-magnifier"></i>
-                                            </a>
-                                        </li>
-                                        <li class="add-to-cart">
-                                            <a href="{{ route('app.cart.index') }}" title="Add to Cart">
-                                                <span class="cart-text d-none d-xl-block">Add to Cart</span>
-                                                <span class="d-block d-xl-none"><i class="icon-handbag"></i></span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#" title="Quick View" data-bs-toggle="modal" data-bs-target="#quick_view_modal">
-                                                <i class="icon-shuffle"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="product-info">
-                                <h2 class="product-title">
-                                    <a href="{{ route('app.product_details', ['slug' => $product->slug]) }}">{{ $product->name }}</a>
-                                </h2>
-                                <div class="product-price">
-                                    <span>$ {{ $product->price }}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-
-
-
 
 @endsection

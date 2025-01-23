@@ -28,7 +28,6 @@ class StoreShopRequest extends FormRequest
             'phone' => 'nullable|string|max:20',
             'email' => 'nullable|email|max:255',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:1024',
-            'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:1024',
         ];
     }
 }

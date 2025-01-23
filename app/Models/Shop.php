@@ -18,7 +18,6 @@ class Shop extends Model
         'phone',
         'email',
         'logo',
-        'cover_image',
     ];
 
 

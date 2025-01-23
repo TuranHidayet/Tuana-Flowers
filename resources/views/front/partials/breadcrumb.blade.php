@@ -7,7 +7,7 @@
                         <h1 class="ltn__page-title">{{$title}}</h1>
                         <div class="ltn__breadcrumb-list">
                             <ul>
-                                <li><a href="/">Home</a></li>
+
                                 <li>{{$title}}</li>
                             </ul>
                         </div>

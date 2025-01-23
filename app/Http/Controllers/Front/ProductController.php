@@ -20,8 +20,11 @@ class ProductController extends Controller
      */
     public function index()
     {
+
         $galleries = ProductGallery::all();
-        $products = Product::all();
+        $products = Product::where('user_id', auth()->id())->get();
+
+
         return view('front.products.index', compact('products', 'galleries'));
     }
 
@@ -78,13 +81,13 @@ class ProductController extends Controller
     }
 
 
-//    public function show(string $slug)
-//    {
-//        $product = Product::where('slug', $slug)->first();
-//        $galleries = ProductGallery::where('product_id', $product->id)->get();
-//
-//        return view('front.products.show', compact('product', 'galleries'));
-//    }
+    public function show(string $slug)
+    {
+        $product = Product::where('slug', $slug)->first();
+        $galleries = ProductGallery::where('product_id', $product->id)->get();
+
+        return view('front.products.show', compact('product', 'galleries'));
+    }
 
     public function edit(string $id)
     {
@@ -117,8 +120,44 @@ class ProductController extends Controller
             Storage::delete($product->product_image);
         }
 
+        if ($product->galleries) {
+            foreach ($product->galleries as $gallery) {
+                Storage::delete($gallery->path);
+                $gallery->delete();
+            }
+        }
+
         $product->delete();
 
-        return redirect()->back()->with('success', 'Product deleted successfully.');
+        return redirect()->route('app.products.index')->with('success', 'Product deleted successfully.');
+    }
+
+    public function toggleStatus(Request $request, $id)
+    {
+        $product = Product::findOrFail($id);
+
+        $product->stock = $product->stock === 'active' ? 'inactive' : 'active';
+
+        \Log::info('Product status changed:', [
+            'product_id' => $id,
+            'new_status' => $product->stock
+        ]);
+        $product->save();
+
+        return response()->json([
+            'success' => true,
+            'new_status' => $product->stock,
+        ]);
+    }
+    public function categoryShow($categorySlug)
+    {
+        // Kateqoriyanı slug-a görə tapırıq
+        $category = Category::where('slug', $categorySlug)->firstOrFail();
+
+        // Həmin kateqoriyaya aid olan məhsulları gətiririk
+        $products = Product::where('category_id', $category->id)->get();
+
+        // Kateqoriya və məhsulları 'products.index' səhifəsinə göndəririk
+        return view('app.category.index', compact('category', 'products'));
     }
 }

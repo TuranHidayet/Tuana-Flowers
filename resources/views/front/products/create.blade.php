@@ -8,8 +8,11 @@
         <div class="card card-primary">
             <div class="card-header">
                 <div class="card-tools">
+                    <a href="{{ route('app.products.index') }}" class="btn btn-sm btn-warning">Back To List</a>
+
                     <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
                         <i class="fas fa-minus"></i> Create Product
+
                     </button>
                 </div>
             </div>
@@ -129,8 +132,7 @@
                         @enderror
                     </div>
 
-                    <!-- Submit Button -->
-                    <button type="submit" class="btn btn-primary btn-block rounded-pill py-2">
+                    <button type="submit" class="btn btn-primary btn-block rounded-pill pt-2 mt-4">
                         @lang('Add Product')
                     </button>
                 </form>

@@ -9,7 +9,6 @@
     <section class="content">
         <div class="card">
             <div class="card-header">
-                <a href="" class="btn btn-sm btn-warning mr-auto">Create</a>
 
 
                 <div class="card-tools">

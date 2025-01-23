@@ -13,20 +13,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     @yield('customCss')
-    <!-- Place favicon.png in the root directory -->
-    <link rel="shortcut icon" href="{{ asset('front/img/favicon.png') }}" type="image/x-icon"/>
-    <!-- Font Icons css -->
-    <link rel="stylesheet" href="{{ asset('front/css/font-icons.css') }}">
-    <!-- Plugins css -->
-    <link rel="stylesheet" href="{{ asset('front/css/plugins.css') }}">
-    <!-- Main Stylesheet -->
-    <link rel="stylesheet" href="{{ asset('front/css/style.css') }}">
-    <!-- Responsive css -->
-    <link rel="stylesheet" href="{{ asset('front/css/responsive.css') }}">
 
     <style>
-
-
 {{--        Florist Css--}}
         .florist-img {
             width: 210px;
@@ -84,9 +72,19 @@
 
     </style>
 
+    <!-- Place favicon.png in the root directory -->
+    <link rel="shortcut icon" href="{{ asset('front/img/favicon.png') }}" type="image/x-icon"/>
+    <!-- Font Icons css -->
+    <link rel="stylesheet" href="{{ asset('front/css/font-icons.css') }}">
+    <!-- Plugins css -->
+    <link rel="stylesheet" href="{{ asset('front/css/plugins.css') }}">
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="{{ asset('front/css/style.css') }}">
+    <!-- Responsive css -->
+    <link rel="stylesheet" href="{{ asset('front/css/responsive.css') }}">
 
-
-
+    <!-- sweet alert installer code -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -137,8 +135,8 @@
 <!-- DataTables -->
 <script src="{{ asset('front/plugins/datatables/jquery.dataTables.js') }}"></script>
 <script src="{{ asset('front/plugins/datatables-bs4/js/dataTables.bootstrap4.js') }}"></script>
-<!-- AdminLTE App -->
-<script src="{{ asset('front/dist/js/adminlte.js') }}"></script>
+{{--<!-- AdminLTE App -->--}}
+{{--<script src="{{ asset('front/dist/js/adminlte.js') }}"></script>--}}
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{{ asset('front/dist/js/pages/dashboard.js') }}"></script>
 <!-- AdminLTE for demo purposes -->
@@ -209,6 +207,59 @@
             confirmButtonText: btnText
         });
     }
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const addToCartLinks = document.querySelectorAll('.add-to-cart a');
+
+        addToCartLinks.forEach(link => {
+            link.addEventListener('click', function (event) {
+                event.preventDefault();
+
+                const productId = this.getAttribute('data-product-id');
+                const productName = this.getAttribute('data-product-name');
+                const productImage = this.getAttribute('data-product-image');
+                const productPrice = this.getAttribute('data-product-price');
+
+                // AJAX sorğusu
+                fetch('/cart/add', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    },
+                    body: JSON.stringify({
+                        product_id: productId,
+                        name: productName,
+                        image: productImage,
+                        price: productPrice,
+                        quantity: 1 // Default olaraq 1 miqdar
+                    })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Modal aç və mesaj göstər
+                            const modal = new bootstrap.Modal(document.getElementById('add_to_cart_modal'));
+                            const modalImage = document.querySelector('#add_to_cart_modal .modal-product-img img');
+                            const modalName = document.querySelector('#add_to_cart_modal .modal-product-info h5 a');
+                            const modalMessage = document.querySelector('#add_to_cart_modal .added-cart');
+
+                            modalImage.src = productImage;
+                            modalName.textContent = productName;
+                            modalMessage.textContent = 'Successfully added to your Cart!';
+                            modal.show();
+                        } else {
+                            alert('Xəta baş verdi, məhsul əlavə olunmadı!');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Xəta:', error);
+                    });
+            });
+        });
+    });
 </script>
 
 

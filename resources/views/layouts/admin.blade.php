@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'AdminLTE 3')</title>
-
     <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>@yield('title', 'AdminLTE 3')</title>
+
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>AdminLTE 3 | Dashboard</title>
+        <title>Admin</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
+        @yield('customCss')
         <!-- overlayScrollbars -->
         <link rel="stylesheet" href="{{ asset('admin/dist/css/adminlte.min.css') }}">
         <!-- Google Font: Source Sans Pro -->
@@ -40,7 +40,6 @@
         <link rel="stylesheet" href="{{asset('admin/plugins/select2/css/select2.min.css')}}">
         <link rel="stylesheet" href="{{asset('admin/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
 
-
         <link rel="stylesheet" href="{{asset('admin/plugins/icheck-bootstrap/icheck-bootstrap.min.css')}}">
         <link rel="stylesheet" href="{{asset('admin/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css')}}">
         <link rel="stylesheet" href="{{asset('admin/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css')}}">
@@ -48,8 +47,6 @@
         <!-- sweet alert installer code -->
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     </head>
-    @yield('customCss')
-</head>
 <body>
 <div class="wrapper">
 

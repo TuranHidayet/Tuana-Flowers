@@ -113,8 +113,14 @@ class ProductController extends Controller
             Storage::delete($product->product_image);
         }
 
+        if ($product->galleries) {
+            foreach ($product->galleries as $gallery) {
+                Storage::delete($gallery->path);
+                $gallery->delete();
+            }
+        }
         $product->delete();
 
-        return redirect()->back()->with('success', 'Product deleted successfully.');
+        return redirect()->route('admin.products.index')->with('success', 'Product deleted successfully.');
     }
 }

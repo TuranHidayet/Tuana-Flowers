@@ -9,7 +9,7 @@
     <section class="content ">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title text-center ">Məhsul haqqında məlumat</h3>
+                <h3 class="card-title text-center ">About Product</h3>
                 <div class="card-tools">
                     <a href="{{ route('app.products.index') }}" class="btn btn-sm btn-warning">Back</a>
                 </div>
@@ -17,7 +17,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-6">
-                        <img src="{{ Storage::url($product->product_image) }}" alt="{{ $product->name }}" class="img-fluid" style="max-width: 548px; height: 710px; object-fit: contain;">
+                        <img src="{{ Storage::url($product->product_image) }}" alt="{{ $product->name }}" class="img-fluid" style="max-width: 548px; height: 350px; object-fit: contain;">
                     </div>
                     <div class="col-md-6">
                         <table class="table table-bordered">
@@ -48,29 +48,29 @@
                                 <td>{{ $product->created_at->format('d-m-Y H:i:s') }}</td>
                             </tr>
                         </table>
+                        <div class="card-footer">
+                            <a href="{{ route('app.products.edit', $product->id) }}" class="btn btn-sm btn-primary">Edit</a>
+                            <a href="javascript:void(0);"
+                               onclick="deleteCategory('{{ route('admin.products.destroy', ['id' => $product->id]) }}')"
+                               class="btn btn-sm btn-danger ml-2">Delete Product</a>
+                        </div>
                     </div>
                 </div>
-                <div class="mt-3">
-                    <h4>Gallery Images:</h4>
+                <div class="mt-5">
+                    <h4 class="text-center">Gallery Images:</h4>
                     <div class="row">
-                        @foreach($product->galleries as $gallery)
+                        @foreach($galleries as $gallery)
                             <div class="col-md-3">
-                                <img src="{{ Storage::url($gallery->image) }}" alt="Gallery Image" class="img-fluid mb-2" style="max-width: 100%; height: auto;">
-                                <form action="{{ route('app.products.destroy', $gallery->id) }}" method="POST" onsubmit="return confirm('Bu şəkli silmək istədiyinizə əminsinizmi?')">
-                                    @csrf
-                                    @method('GET')
-                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                                </form>
+                                <img src="{{ Storage::url($gallery->path) }}" alt="Gallery Image" class="img-fluid mb-2" style="max-width: 100%; height: 250px;">
+{{--                                <form action="{{ route('app.products.destroy', $gallery->id) }}" method="POST" onsubmit="return confirm('Bu şəkli silmək istədiyinizə əminsinizmi?')">--}}
+{{--                                    @csrf--}}
+{{--                                    @method('GET')--}}
+{{--                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>--}}
+{{--                                </form>--}}
                             </div>
                         @endforeach
                     </div>
                 </div>
-            </div>
-            <div class="card-footer">
-                <a href="{{ route('app.products.edit', $product->id) }}" class="btn btn-primary">Edit</a>
-                <a href="javascript:void(0);"
-                   onclick="deleteCategory('{{ route('admin.products.destroy', ['id' => $product->id]) }}')"
-                   class="btn btn-sm btn-danger ml-2">Delete</a>
             </div>
         </div>
     </section>

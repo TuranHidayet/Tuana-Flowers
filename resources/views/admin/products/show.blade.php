@@ -17,7 +17,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-6">
-                        <img src="{{ Storage::url($product->product_image) }}" alt="{{ $product->name }}" class="img-fluid" style="max-width: 588px; height: 712px;">
+                        <img src="{{ Storage::url($product->product_image) }}" alt="{{ $product->name }}" class="img-fluid" style="max-width: 300px; height: 350px;">
                     </div>
                     <div class="col-md-6">
                         <table class="table table-bordered">
@@ -48,29 +48,74 @@
                                 <td>{{ $product->created_at->format('d-m-Y H:i:s') }}</td>
                             </tr>
                         </table>
+                        <div class="card-footer">
+                            <a href="{{ route('admin.products.edit', $product->id) }}" class="btn btn-sm btn-primary">Edit</a>
+                            <a href="javascript:void(0);"
+                               onclick="deleteCategory('{{ route('admin.products.destroy', ['id' => $product->id]) }}')"
+                               class="btn btn-sm btn-danger ml-2">Delete</a>
+                        </div>
                     </div>
                 </div>
                 <div class="mt-3">
-                    <h4>Gallery Images:</h4>
-                    <div class="row">
-                        @foreach($product->galleries as $gallery)
-                            <div class="col-md-3">
-                                <img src="{{ Storage::url($gallery->image) }}" alt="Gallery Image" class="img-fluid mb-2" style="max-width: 100%; height: auto;">
-                                <form action="{{ route('admin.products.destroy', $gallery->id) }}" method="POST" onsubmit="return confirm('Bu şəkli silmək istədiyinizə əminsinizmi?')">
-                                    @csrf
-                                    @method('GET')
-                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                                </form>
-                            </div>
-                        @endforeach
-                    </div>
+                    <h4 class="text-center">Gallery Images:</h4>
+                    @if($product->galleries && $product->galleries->count() > 0)
+                        <div class="row">
+                            @foreach($product->galleries as $gallery)
+                                <div class="col-md-3">
+                                    <img src="{{ Storage::url($gallery->path) }}" alt="Gallery Image" class="img-fluid mb-2" style="max-width: 100%; height: 250px;">
+                                </div>
+                            @endforeach
+                        </div>
+                    @else
+                        <p class="text-center">No Gallery Image</p>
+                    @endif
                 </div>
             </div>
-            <div class="card-footer">
-                <a href="{{ route('admin.products.edit', $product->id) }}" class="btn btn-primary">Edit</a>
-            </div>
+
         </div>
     </section>
 
+@endsection
+
+@section('customJs')
+    <script>
+        $(function () {
+            $('#contactTable').DataTable();
+        });
+    </script>
+
+    <script>
+        function deleteCategory(url) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't delete this Product!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = url;
+                }
+            });
+        }
+    </script>
+
+    <script>
+        document.querySelector('#deleteProduct').addEventListener('submit', function (e) {
+            e.preventDefault();
+            showAlert(
+                "Success!",
+                "Product deleted successfully.",
+                "success",
+                "Close"
+            );
+
+            this.submit();
+        });
+
+    </script>
 @endsection
 

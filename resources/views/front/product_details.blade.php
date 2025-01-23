@@ -1,4 +1,4 @@
-@section('title', 'Cart')
+@section('title', 'Product')
 
 
 @extends('layouts.app')
@@ -19,31 +19,28 @@
 
 <!-- SHOP DETAILS AREA START -->
 <div class="ltn__shop-details-area pb-70">
-    <div class="container">
+    <div class="container mt-5">
         <div class="row">
             <div class="col-lg-12 col-md-12">
                 <div class="ltn__shop-details-inner">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="ltn__shop-details-img-gallery ltn__shop-details-img-gallery-2">
-                                <div class="ltn__shop-details-small-img slick-arrow-2">
-                                    <div class="single-small-img">
-                                        <img src="{{Storage::url($product->product_image)}}" alt="Image">
-                                    </div>
-                                    <div class="single-small-img">
-                                        <img src="{{Storage::url($product->product_image)}}" alt="Image">
-                                    </div>
-                                    <div class="single-small-img">
-                                        <img src="{{Storage::url($product->product_image)}}" alt="Image">
-                                    </div>
 
+                                <div class="ltn__shop-details-small-img slick-arrow-2">
+                                    @foreach($galleryImages as $gallery)
+                                    <div class="single-small-img">
+                                        <img src="{{ Storage::url($gallery->path) }}" alt="Image">
+                                    </div>
+                                    @endforeach
                                 </div>
+
                                 <div class="ltn__shop-details-large-img">
 
 
                                     <div class="single-large-img">
                                         <a href="{{Storage::url($product->product_image)}}" data-rel="lightcase:myCollection">
-                                            <img src="{{Storage::url($product->product_image)}}" alt="Image">
+                                            <img src="{{Storage::url($product->product_image)}}" alt="Image" style="max-width: 300px; max-height: 350px">
                                         </a>
                                     </div>
 
@@ -60,24 +57,28 @@
                                                 <span>{{$product->price}}</span>
                                             </div>
                                         </li>
-{{--                                        <li>--}}
-{{--                                            <div class="product-ratting">--}}
-{{--                                                <ul>--}}
-{{--                                                    <li><a href="#"><i class="icon-star"></i></a></li>--}}
-{{--                                                    <li><a href="#"><i class="icon-star"></i></a></li>--}}
-{{--                                                    <li><a href="#"><i class="icon-star"></i></a></li>--}}
-{{--                                                    <li><a href="#"><i class="icon-star"></i></a></li>--}}
-{{--                                                    <li><a href="#"><i class="icon-star"></i></a></li>--}}
-{{--                                                    <li class="review-total"> <a href="#"> ( 95 Reviews )</a></li>--}}
-{{--                                                </ul>--}}
-{{--                                            </div>--}}
-{{--                                        </li>--}}
+
                                     </ul>
                                 </div>
                                 <div class="modal-product-brief">
                                     <p>{{$product->description}}</p>
                                 </div>
                                 <div class="modal-product-meta ltn__product-details-menu-1 mb-20">
+
+                                        <div class="product-ratting">
+                                            <ul>
+                                                @for ($i = 1; $i <= 5; $i++)
+                                                    @if ($i <= round($averageRating))
+                                                        <li><a href="#"><i class="fas fa-star"></i></a></li>
+                                                    @else
+                                                        <li><a href="#"><i class="far fa-star"></i></a></li>
+                                                    @endif
+                                                @endfor
+                                                <div class="review-total">
+                                                    <a href="#">({{ $product->comments->count() }} Reviews)</a>
+                                                </div>
+                                            </ul>
+                                        </div>
 
                                 </div>
                                 <div class="ltn__product-details-menu-2 product-cart-wishlist-btn mb-30">
@@ -88,7 +89,7 @@
                                             </div>
                                         </li>
                                         <li>
-                                            <a href="#" class="theme-btn-1 btn btn-effect-1 d-add-to-cart" title="Add to Cart" data-bs-toggle="modal" data-bs-target="#add_to_cart_modal">
+                                            <a href="#" class="theme-btn-1 btn btn-success d-add-to-cart" title="Add to Cart" data-bs-toggle="modal" data-bs-target="#add_to_cart_modal">
                                                 <span>ADD TO CART</span>
                                             </a>
                                         </li>
@@ -111,7 +112,7 @@
                                 </div>
                                 <div class="modal-product-meta ltn__product-details-menu-1 mb-30">
                                     <ul>
-                                        <li><strong>SKU:</strong> <span>12345</span></li>
+
                                         <li>
                                             <strong>Categories:</strong>
                                             @foreach($product->categories as $category)
@@ -188,7 +189,7 @@
                                                         <li>
                                                             <div class="ltn__comment-item clearfix">
                                                                 <div class="ltn__commenter-img">
-                                                                    <img src="{{Storage::url($comment->user->avatar)  ?? asset('default-avatar.png') }}" alt="Image">
+                                                                    <img src="{{Storage::url($comment->user->avatar)  ?? asset('default-avatar.png') }}" style="width: 70px; height: 70px;" class="rounded-circle"  alt="Image">
                                                                 </div>
                                                                 <div class="ltn__commenter-comment">
                                                                     <h6><a href="#">{{ $comment->user->first_name }} {{ $comment->user->last_name }}</a></h6>
@@ -381,66 +382,7 @@
                         <div class="tab-pane fade" id="liton_tab_details_1_5">
                             <div class="ltn__shop-details-tab-content-inner">
 
-                                <div class="table-1 mb-20">
-                                    <table class="">
-                                        <tbody>
-                                        <tr>
-                                            <th>SIZE</th>
-                                            <th>XS</th>
-                                            <th>S</th>
-                                            <th>S/M</th>
-                                            <th>M</th>
-                                            <th>M/L</th>
-                                            <th>L</th>
-                                            <th>XL</th>
-                                        </tr>
-                                        <tr data-bs-region="uk">
-                                            <th>UK</th>
-                                            <td>4</td>
-                                            <td>6 - 8</td>
-                                            <td>6 - 10</td>
-                                            <td>10 - 12</td>
-                                            <td>12 - 16</td>
-                                            <td>14 - 16</td>
-                                            <td>18</td>
-                                        </tr>
-                                        <tr data-bs-region="eur">
-                                            <th>
-                                                <span class="mobile-show">EUR</span><span class="mobile-none">EUROPE</span>
-                                            </th>
-                                            <td>32</td>
-                                            <td>34 - 36</td>
-                                            <td>34 - 38</td>
-                                            <td>38 - 40</td>
-                                            <td>40 - 44</td>
-                                            <td>42 - 44</td>
-                                            <td>46</td>
-                                        </tr>
-                                        <tr data-bs-region="usa">
-                                            <th>
-                                                <span>USA/</span><span class="mobile-none">CANADA</span><span class="mobile-show"> CA</span>
-                                            </th>
-                                            <td>0</td>
-                                            <td>2 - 4</td>
-                                            <td>2 - 6</td>
-                                            <td>6 - 8</td>
-                                            <td>8 - 12</td>
-                                            <td>10 - 12</td>
-                                            <td>14</td>
-                                        </tr>
-                                        <tr data-bs-region="aus">
-                                            <th>AUS / NZ</th>
-                                            <td>4</td>
-                                            <td>6 - 8</td>
-                                            <td>6 - 10</td>
-                                            <td>10 - 12</td>
-                                            <td>12 - 16</td>
-                                            <td>14 - 16</td>
-                                            <td>18</td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
+
 
                             </div>
                         </div>

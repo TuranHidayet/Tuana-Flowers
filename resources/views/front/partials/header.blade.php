@@ -1,3 +1,4 @@
+
 <header class="ltn__header-area ltn__header-3 section-bg-6">
     <div class="ltn__header-middle-area">
         <div class="container">
@@ -84,17 +85,24 @@
                                 </div>
                             </li>
                             <li>
-                                <div class="mini-cart-icon mini-cart-icon-2">
-                                    <a href="#ltn__utilize-cart-menu" class="ltn__utilize-toggle">
+                                <div class="d-flex gap-4">
+                                    <div>
+                                        <a href="#" class="text-decoration-none">
+                                            <i class="fa fa-heart fa-2x text-danger" id="favorite-icon"></i>
+                                        </a>
+                                    </div>
+                                    <div class="mini-cart-icon mini-cart-icon-2 ">
+                                        <a href="#ltn__utilize-cart-menu" class="ltn__utilize-toggle">
                                         <span class="mini-cart-icon">
                                             <i class="icon-handbag"></i>
                                             <sup id="cart-count">0</sup>
                                         </span>
-                                        <h6>
-                                            <span>Your Cart</span>
-                                            <span class="ltn__secondary-color" id="cart-total-price">$0.00</span>
-                                        </h6>
-                                    </a>
+                                            <h6>
+                                                <span>Your Cart</span>
+                                                <span class="ltn__secondary-color" id="cart-total-price">$0.00</span>
+                                            </h6>
+                                        </a>
+                                    </div>
                                 </div>
                             </li>
 

@@ -67,7 +67,7 @@
                 <div class="col-lg-12">
                     <div class="ltn__form-box contact-form-box box-shadow--- white-bg---">
                         <h3 class="text-center mb-50">Need Our Help! Please Send an Email.</h3>
-                        <form id="contactForm">
+                        <form action="{{ route('app.contact.store') }}" id="shopForm" method="POST" class="ltn__form-box contact-form-box" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
                                 <div class="col-md-5">
@@ -100,7 +100,7 @@
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="btn-wrapper mt-0">
-                                        <button class="btn theme-btn-1 btn-effect-1 text-uppercase" type="submit">Send Message</button>
+                                        <button class="btn theme-btn-1 btn-outline-success text-uppercase" type="submit">Send Message</button>
                                     </div>
                                     <p class="form-messege mb-0 mt-20"></p>
                                 </div>
@@ -134,54 +134,16 @@
 @section('customJs')
 
     <script>
-        $(document).ready(function () {
-            $("#contactForm").on('submit', function (e) {
-                e.preventDefault();
+        document.querySelector('#shopForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            showAlert(
+                "Success!",
+                "Thanks for contacting us!",
+                "success",
+                "Close"
+            );
 
-                var formData = $(this).serialize();
-
-                $.ajax({
-                    url: '{{ route('app.contact.store') }}',
-                    method: "POST",
-                    data: formData,
-                    success: function (response) {
-                        showAlert(
-                            "Success!",
-                            "Your message has been successfully sent.",
-                            "success",
-                            "Close"
-                        );
-
-                        $("#contactForm")[0].reset();
-                    },
-                    error: function (error) {
-                        console.log('error: ', error);
-
-                        if (error.responseJSON && error.responseJSON.errors) {
-                            var errors = error.responseJSON.errors;
-                            var errorMessage = "";
-
-                            for (var key in errors) {
-                                errorMessage += errors[key].join(', ') + '\n';
-                            }
-
-                            showAlert(
-                                "Error!",
-                                errorMessage,
-                                "error",
-                                "Close"
-                            );
-                        } else {
-                            showAlert(
-                                "Error!",
-                                "An unexpected error occurred. Please try again.",
-                                "error",
-                                "Close"
-                            );
-                        }
-                    }
-                });
-            });
+            this.submit();
         });
 
     </script>

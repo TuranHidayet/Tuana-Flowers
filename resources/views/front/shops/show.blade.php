@@ -19,7 +19,7 @@
 
                                     <div class="single-large-img">
                                         <a href="{{Storage::url($shop->logo)}}" data-rel="lightcase:myCollection">
-                                            <img src="{{Storage::url($shop->logo)}}" alt="{{$shop->name}}">
+                                            <img src="{{Storage::url($shop->logo)}}" alt="{{$shop->name}}" style="width: 350px; height: 350px">
                                         </a>
                                     </div>
 
@@ -28,34 +28,24 @@
                         </div>
                         <div class="col-md-6">
                             <div class="modal-product-info shop-details-info pl-0">
-                                <h3>{{$shop->name}}</h3>
+                                <h5 class="product-price">{{$shop->name}}</h5>
                                 <div class="product-price-ratting mb-20">
                                     <ul>
                                         <li>
-                                            <div class="product-price">
-                                                <span>Phone: {{$shop->phone}}</span>
-
+                                            <div class="modal-product-brief">
+                                                <p>{{$shop->description}}</p>
                                             </div>
-                                            <p>Email: {{$shop->email}}</p>
-                                            <span>{{$shop->address}}</span>
+                                            <p>Created by: <strong style="color: #0a53be">{{$shop->user->first_name}} {{$shop->user->last_name}}</strong></p>
+                                            <div>
+                                                <span>Phone: {{$shop->phone}}</span>
+                                            </div>
+                                            <span>Email: {{$shop->email}}</span>
+                                            <br>
+                                            <span>Address: {{$shop->address}}</span>
                                         </li>
-{{--                                        <li>--}}
-{{--                                            <div class="product-ratting">--}}
-{{--                                                <ul>--}}
-{{--                                                    <li><a href="#"><i class="icon-star"></i></a></li>--}}
-{{--                                                    <li><a href="#"><i class="icon-star"></i></a></li>--}}
-{{--                                                    <li><a href="#"><i class="icon-star"></i></a></li>--}}
-{{--                                                    <li><a href="#"><i class="icon-star"></i></a></li>--}}
-{{--                                                    <li><a href="#"><i class="icon-star"></i></a></li>--}}
-{{--                                                    <li class="review-total"> <a href="#"> ( 95 Reviews )</a></li>--}}
-{{--                                                </ul>--}}
-{{--                                            </div>--}}
-{{--                                        </li>--}}
                                     </ul>
                                 </div>
-                                <div class="modal-product-brief">
-                                    <p>{{$shop->description}}</p>
-                                </div>
+
 
 
                                 <div class="ltn__social-media mb-30">
@@ -68,6 +58,17 @@
 
                                     </ul>
                                 </div>
+                                @if(auth()->check() && auth()->id() === $shop->user_id)
+
+                                    <div class="shop-actions">
+                                        <a href="{{ route('app.products.create') }}" class="btn btn-sm btn-primary">Add Product</a>
+                                        <a href="{{ route('app.shops.edit', ['id' => $shop->id]) }}" class="btn btn-sm btn-primary mx-2">Edit</a>
+                                        <a href="{{ route('app.shops.destroy', ['id' => $shop->id]) }}"
+                                           class="btn btn-sm btn-danger"
+                                           onclick="return confirm('Are you sure you want to delete this shop?')">Delete Shop</a>
+                                    </div>
+                                @endif
+
 
                             </div>
                         </div>

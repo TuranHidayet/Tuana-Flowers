@@ -248,14 +248,6 @@
                             </div>
 
                             <div class="form-group mb-3">
-                                <label for="cover_image">Shop Image</label>
-                                <input type="file" id="cover_image" name="cover_image" class="form-control">
-                                @error('cover_image')
-                                    <span class="text-danger mt-1">{{$message}}</span>
-                                @enderror
-                            </div>
-
-                            <div class="form-group mb-3">
                                 <label for="password">Password</label>
                                 <input type="password" id="password" name="password" class="form-control" placeholder="Password*">
                                 @error('password')

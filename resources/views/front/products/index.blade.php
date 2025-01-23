@@ -3,6 +3,12 @@
 @section('title', 'Products')
 
 @section('content')
+    {{--    <!-- Admin LTE 3 -->--}}
+    <link rel="stylesheet" href="{{ asset('admin/dist/css/adminlte.min.css') }}">
+    <!--Admin  Select2 -->
+    <link rel="stylesheet" href="{{asset('admin/plugins/select2/css/select2.min.css')}}">
+    <link rel="stylesheet" href="{{asset('admin/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
+
 
 <div class="container ">
     <section class="content pt-5">
@@ -20,6 +26,7 @@
                         <th>Product Price</th>
                         <th>Description</th>
                         <th>Status</th>
+                        <th class="text-center">Operations</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -32,18 +39,19 @@
                             <td>{{$product->price}}</td>
                             <td>{{$product->description}}</td>
                             <td>
-                                @if($product->stock === 'active')
-                                    <span class="badge badge-pill badge-success">Available</span>
-                                @else
-                                    <span class="badge badge-pill badge-danger">Not Available</span>
-                                @endif
+                                <button
+                                    class="btn btn-sm toggle-status-btn
+                                    {{ $product->stock === 'active' ? 'btn-success' : 'btn-danger' }}"
+                                    data-id="{{ $product->id }}">
+                                    {{ $product->stock === 'active' ? 'Active' : 'Inactive' }}
+                                </button>
                             </td>
-                            <td class="d-flex">
+                            <td class="d-flex pb-5">
                                 <a href="{{ route('app.products.show', ['slug'=>$product->slug]) }}" class="btn btn-sm btn-info">Show</a>
-                                <a href="{{ route('app.products.edit', ['id'=>$product->id]) }}" class="btn btn-sm btn-primary mx-2">Edit</a>
+                                <a href="{{ route('app.products.edit', ['id'=>$product->id]) }}" class="btn btn-sm btn-primary">Edit</a>
                                 <a href="javascript:void(0);"
                                    onclick="deleteCategory('{{ route('admin.products.destroy', ['id' => $product->id]) }}')"
-                                   class="btn btn-sm btn-danger ml-2">Delete</a>
+                                   class="btn btn-sm btn-danger">Delete</a>
                             </td>
                         </tr>
                     @endforeach
@@ -57,13 +65,12 @@
                         <th>Product Price</th>
                         <th>Description</th>
                         <th>Status</th>
+                        <th class="text-center">Operations</th>
                     </tr>
                     </tfoot>
                 </table>
             </div>
-            <div class="card-footer">
-                Footer
-            </div>
+
         </div>
     </section>
 </div>
@@ -96,4 +103,36 @@
             }
         </script>
 
+
+{{--    active - non active--}}
+    <script>
+        $(document).on('click', '.toggle-status-btn', function() {
+            const button = $(this);
+            const productId = button.data('id');
+
+            $.ajax({
+                url: "{{ url('/products') }}/" + productId + "/toggle-status",
+                type: 'POST',
+                data: {
+                    _token: "{{ csrf_token() }}"
+                },
+                success: function(response) {
+                    if (response.success) {
+                        if (response.new_status === 'active') {
+                            button.removeClass('btn-danger').addClass('btn-success');
+                            button.text('Active');
+                        } else {
+                            button.removeClass('btn-success').addClass('btn-danger');
+                            button.text('Inactive');
+                        }
+                    }
+                },
+                error: function(xhr) {
+                    console.error(xhr.responseText);
+                    alert('Something went wrong. Please try again.');
+                }
+            });
+        });
+
+    </script>
 @endsection

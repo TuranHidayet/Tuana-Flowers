@@ -23,7 +23,7 @@ class ContactRequest extends FormRequest
             'name' => 'nullable|string|max:50',
             'email' => 'required|email|max:50',
             'subject'=> 'nullable|string|max:100',
-            'message'=> 'nullable|string|max:500',
+            'message'=> 'nullable|string|max:255',
             'status'=> 'nullable|boolean',
         ];
     }

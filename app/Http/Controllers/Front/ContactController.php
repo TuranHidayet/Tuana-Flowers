@@ -25,7 +25,7 @@ class ContactController extends Controller
                 return response()->json(['error' => 'Something went wrong'], 500);
             }
 
-            return response()->json(['success' => 'Thanks for contacting us!'], 200);
+            return redirect()->back()->with('success', 'Thanks for contacting us!');
         } catch (\Illuminate\Validation\ValidationException $e) {
             return response()->json([
                 'errors' => $e->validator->errors()

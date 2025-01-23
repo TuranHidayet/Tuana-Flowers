@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
             $table->string('logo')->nullable();
-            $table->string('cover_image')->nullable();
             $table->timestamps();
         });
     }

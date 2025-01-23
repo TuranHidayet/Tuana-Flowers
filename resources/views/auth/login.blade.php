@@ -239,6 +239,26 @@
 
 @endsection
 
+@section('customJs')
 
-
+    @if(session('swal'))
+        <script>
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'Do you want to log out?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, log out!',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Logout əməliyyatı
+                    window.location.href = "{{ route('app.login') }}"; // Bu, logout route-unuzu çağırır
+                }
+            });
+        </script>
+    @endif
+@endsection
 

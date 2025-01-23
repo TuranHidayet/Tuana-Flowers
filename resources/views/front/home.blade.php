@@ -4,8 +4,23 @@
 @extends('layouts.app')
 
 
-@section('content')
+@section('customCss')
 
+    <style>
+        /* categories üçün sticky stilini əlavə et */
+        .widget.ltn__menu-widget {
+            position: sticky;
+            top: 70px;
+            z-index: 10;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0px 4px 6px rgba(0,0,0,0.1);
+        }
+
+    </style>
+@endsection
+
+@section('content')
 
 
 <body>
@@ -14,226 +29,86 @@
 
     @include('front.partials.sliders')
 
-    @include('front.partials.banner')
-
     @include('front.partials.feature')
 
-    <div class="ltn__product-area ltn__product-gutter  pt-65 pb-40">
+    @include('front.partials.banner')
+
+
+
+    <div class="ltn__product-area ltn__product-gutter pt-65 pb-40">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section-title-area text-center">
-                        <h1 class="section-title section-title-border">new arrival items</h1>
+                        <h1 class="section-title section-title-border">Yeni Məhsullar</h1>
                     </div>
                 </div>
             </div>
-            <div class="row justify-content-center">
-                @foreach($products as $product)
-                <div class="col-lg-3 col-md-4 col-sm-6 col-6">
-                    <div class="ltn__product-item text-center">
-                        <div class="product-img">
-                            <a href="{{ route('app.product_details', ['slug' => $product->slug]) }}"><img src="{{Storage::url($product->product_image)}}" alt="#"></a>
-                            <div class="product-badge">
-                                <ul>
-                                    <li class="badge-1">Hot</li>
-                                </ul>
-                            </div>
-                            <div class="product-hover-action product-hover-action-2">
-                                <ul>
-                                    <li>
-                                        <a href="#" title="Quick View" data-bs-toggle="modal" data-bs-target="#quick_view_modal">
-                                            <i class="icon-magnifier"></i>
-                                        </a>
-                                    </li>
-{{--                                    <li class="add-to-cart">--}}
-{{--                                        <a href="{{route('app.cart.index')}}" title="Add to Cart" data-bs-toggle="modal" data-bs-target="#add_to_cart_modal">--}}
-{{--                                            <span class="cart-text d-none d-xl-block">Add to Cart</span>--}}
-{{--                                            <span class="d-block d-xl-none"><i class="icon-handbag"></i></span>--}}
-{{--                                        </a>--}}
-{{--                                    </li>--}}
-                                    <li class="add-to-cart">
-                                        <a href="#" data-product-id="{{ $product->id }}" title="Add to Cart">
-                                            <span class="cart-text d-none d-xl-block">Add to Cart</span>
-                                            <span class="d-block d-xl-none"><i class="icon-handbag"></i></span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" title="Quick View" data-bs-toggle="modal" data-bs-target="#quick_view_modal">
-                                            <i class="icon-shuffle"></i>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="product-info">
-                            <h2 class="product-title"><a href="{{ route('app.product_details', ['slug' => $product->slug]) }}">{{$product->name}}</a></h2>
-                            <div class="product-price">
-                                <span>$ {{$product->price}}</span>
-                            </div>
-                        </div>
+            <div class="row justify-content-between">
+                <div class="col-lg-3">
+                    <div class="widget ltn__menu-widget">
+                        <h4 class="ltn__widget-title">categories</h4>
+                        <ul>
+                            @foreach($categories as $category)
+                                <li><a href="{{ route('admin.category.show', ['id' => $category->id]) }}">{{$category->name}}</a></li>
+                            @endforeach
+                        </ul>
                     </div>
                 </div>
-                @endforeach
+                <div class="col-lg-9">
+                    <div class="row justify-content-center">
+                        @foreach($products as $product)
+                            <div class="col-lg-3 col-md-4 col-sm-6 col-6">
+                                <div class="ltn__product-item text-center">
+                                    <div class="product-img">
+                                        <a href="{{ route('app.product_details', ['slug' => $product->slug]) }}">
+                                            <img src="{{ Storage::url($product->product_image) }}" alt="#">
+                                        </a>
+                                        <div class="product-badge">
+                                            <ul>
+                                                <li class="badge-1">Sale</li>
+                                            </ul>
+                                        </div>
+                                        <div class="product-hover-action product-hover-action-2">
+                                            <ul>
+                                                <li class="add-to-cart">
+                                                    <a href="#"
+                                                       data-product-id="{{ $product->id }}"
+                                                       data-product-name="{{ $product->name }}"
+                                                       data-product-image="{{ Storage::url($product->product_image) }}"
+                                                       data-product-price="{{ $product->price }}"
+                                                       data-product = "{{ $product }}"
+                                                       title="Add to Cart">
+                                                        <span class="cart-text d-none d-xl-block">Add to Cart</span>
+                                                        <span class="d-block d-xl-none"><i class="icon-handbag"></i></span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="product-info">
+                                        <h2 class="product-title">
+                                            <a href="{{ route('app.product_details', ['slug' => $product->slug]) }}">{{$product->name}}</a>
+                                        </h2>
+                                        <div class="product-price">
+                                            <span>$ {{$product->price}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-
-    <div class="widget ltn__menu-widget">
-        <h4 class="ltn__widget-title">categories</h4>
-        <ul>
-            @foreach($categories as $category)
-                <li><a href="#">{{$category->name}}</a></li>
-            @endforeach
-
-        </ul>
-    </div>
 
 
 
     @include('front.partials.bannerBottom')
 
-
-    <!-- MODAL AREA START (Quick View Modal) -->
-    <div class="ltn__modal-area ltn__quick-view-modal-area">
-        <div class="modal fade" id="quick_view_modal" tabindex="-1">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                            <!-- <i class="fas fa-times"></i> -->
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="ltn__quick-view-modal-inner">
-                            <div class="modal-product-item">
-                                <div class="row">
-                                    <div class="col-lg-6 col-12">
-                                        <div class="modal-product-img">
-                                            <img src="img/product/4.png" alt="#">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-12">
-                                        <div class="modal-product-info shop-details-info pl-0">
-                                            <h3>Pink Flower Tree Red</h3>
-                                            <div class="product-price-ratting mb-20">
-                                                <ul>
-                                                    <li>
-                                                        <div class="product-price">
-                                                            <span>$49.00</span>
-                                                            <del>$65.00</del>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="product-ratting">
-                                                            <ul>
-                                                                <li><a href="#"><i class="icon-star"></i></a></li>
-                                                                <li><a href="#"><i class="icon-star"></i></a></li>
-                                                                <li><a href="#"><i class="icon-star"></i></a></li>
-                                                                <li><a href="#"><i class="icon-star"></i></a></li>
-                                                                <li><a href="#"><i class="icon-star"></i></a></li>
-                                                                <li class="review-total"> <a href="#"> ( 95 Reviews )</a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div class="modal-product-brief">
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos repellendus repudiandae incidunt quidem pariatur expedita, quo quis modi tempore non.</p>
-                                            </div>
-                                            <div class="modal-product-meta ltn__product-details-menu-1 mb-20">
-                                                <ul>
-                                                    <li>
-                                                        <div class="ltn__color-widget clearfix">
-                                                            <strong class="d-meta-title">Color</strong>
-                                                            <ul>
-                                                                <li class="theme"><a href="#"></a></li>
-                                                                <li class="green-2"><a href="#"></a></li>
-                                                                <li class="blue-2"><a href="#"></a></li>
-                                                                <li class="white"><a href="#"></a></li>
-                                                                <li class="red"><a href="#"></a></li>
-                                                                <li class="yellow"><a href="#"></a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="ltn__size-widget clearfix mt-25">
-                                                            <strong class="d-meta-title">Size</strong>
-                                                            <ul>
-                                                                <li><a href="#">S</a></li>
-                                                                <li><a href="#">M</a></li>
-                                                                <li><a href="#">L</a></li>
-                                                                <li><a href="#">XL</a></li>
-                                                                <li><a href="#">XXL</a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div class="ltn__product-details-menu-2 product-cart-wishlist-btn mb-30">
-                                                <ul>
-                                                    <li>
-                                                        <div class="cart-plus-minus">
-                                                            <input type="text" value="02" name="qtybutton" class="cart-plus-minus-box">
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <a href="{{route('app.cart.index')}}" class="theme-btn-1 btn btn-effect-1 d-add-to-cart" title="Add to Cart" data-bs-toggle="modal" data-bs-target="#add_to_cart_modal">
-                                                            <span>ADD TO CART</span>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#" class="btn btn-effect-1 d-add-to-wishlist" title="Add to Cart" data-bs-toggle="modal" data-bs-target="#liton_wishlist_modal">
-                                                            <i class="icon-heart"></i>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div class="ltn__social-media mb-30">
-                                                <ul>
-                                                    <li class="d-meta-title">Share:</li>
-                                                    <li><a href="#" title="Facebook"><i class="icon-social-facebook"></i></a></li>
-                                                    <li><a href="#" title="Twitter"><i class="icon-social-twitter"></i></a></li>
-                                                    <li><a href="#" title="Pinterest"><i class="icon-social-pinterest"></i></a></li>
-                                                    <li><a href="#" title="Instagram"><i class="icon-social-instagram"></i></a></li>
-
-                                                </ul>
-                                            </div>
-                                            <div class="modal-product-meta ltn__product-details-menu-1 mb-30 d-none">
-                                                <ul>
-                                                    <li><strong>SKU:</strong> <span>12345</span></li>
-                                                    <li>
-                                                        <strong>Categories:</strong>
-                                                        <span>
-                                                            <a href="#">Flower</a>
-                                                        </span>
-                                                    </li>
-                                                    <li>
-                                                        <strong>Tags:</strong>
-                                                        <span>
-                                                            <a href="#">Love</a>
-                                                            <a href="#">Flower</a>
-                                                            <a href="#">Heart</a>
-                                                        </span>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div class="ltn__safe-checkout d-none">
-                                                <h5>Guaranteed Safe Checkout</h5>
-                                                <img src="img/icons/payment-2.png" alt="Payment Image">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- MODAL AREA END -->
 
     <!-- MODAL AREA START (Add To Cart Modal) -->
     <div class="ltn__modal-area ltn__add-to-cart-modal-area">
@@ -265,7 +140,6 @@
                                         </div>
                                         <!-- additional-info -->
                                         <div class="additional-info d-none--">
-                                            <p>We want to give you <b>10% discount</b> for your first order, <br>  Use (fiama10) discount code at checkout</p>
                                             <div class="payment-method">
                                                 <img src="{{asset('front/img/icons/payment.png')}}" alt="#">
                                             </div>
@@ -337,11 +211,97 @@
     </div>
 </div>
 <!-- preloader area end -->
-
-
-
-
 </body>
+@endsection
 
+@section('customJs')
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Səbət UI-ni səhifə yükləndikdən sonra göstər
+            showCartUI();
+
+            document.querySelectorAll('.add-to-cart a').forEach(button => {
+                button.addEventListener('click', function (e) {
+                    e.preventDefault();
+
+                    const productId = this.getAttribute('data-product-id');
+                    const productName = this.getAttribute('data-product-name');
+                    const productImage = this.getAttribute('data-product-image');
+                    const productPrice = this.getAttribute('data-product-price');
+                    const product = JSON.parse(this.getAttribute('data-product'));
+
+                    // Modal sahəsini doldur
+                    document.querySelector('#add_to_cart_modal .modal-product-img img').src = productImage;
+                    document.querySelector('#add_to_cart_modal .modal-product-info h5 a').textContent = productName;
+                    document.querySelector('#add_to_cart_modal .modal-product-info h5 a').href = `/product/${productId}`;
+                    document.querySelector('#add_to_cart_modal .modal-product-info .added-cart').textContent = `Successfully added ${productName} to your Cart`;
+
+                    // Modalı aç
+                    const modal = new bootstrap.Modal(document.getElementById('add_to_cart_modal'));
+                    modal.show();
+
+                    // Məhsulu səbətə əlavə edin və UI-ni yeniləyin
+                    addToStorage(product);
+                    showCartUI();
+                });
+            });
+        });
+
+
+
+        function addToStorage(product){
+
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const existingProduct = cart.find(item => item.id === product.id);
+
+            if (existingProduct) {
+                existingProduct.quantity++;
+            } else {
+                product.quantity = 1;
+                cart.push(product);
+            }
+
+            localStorage.setItem('cart', JSON.stringify(cart));
+            alert('Məhsul səbətə əlavə edildi!');
+        }
+
+        function showCartUI() {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartContainer = document.querySelector('#mini-cart-products');
+
+            // Səbət siyahısını təmizləyirik
+            cartContainer.innerHTML = '';
+
+            if (cart.length === 0) {
+                cartContainer.innerHTML = '<p>Səbət boşdur!</p>';
+                return;
+            }
+
+            const storageUrl = '{{Storage::url('')}}';
+            // Səbətdəki hər bir məhsulu göstəririk
+            cart.forEach(product => {
+
+                const productImage = product.product_image
+                    ? `${storageUrl}${product.product_image}`
+                    : '/default-image.jpg';
+
+                const productHTML = `
+            <div class="mini-cart-item clearfix">
+                <div class="mini-cart-img">
+                    <a href="#"><img src="${productImage}" alt="${product.name}"></a>
+                    <span class="mini-cart-item-delete" onclick="removeFromCart(${product.id})"><i class="icon-trash"></i></span>
+                </div>
+                <div class="mini-cart-info">
+                    <h6><a href="#">${product.name}</a></h6>
+                    <span class="mini-cart-quantity">${product.quantity * product.price} AZN</span>
+                </div>
+            </div>
+        `;
+                cartContainer.insertAdjacentHTML('beforeend', productHTML);
+            });
+        }
+
+    </script>
 
 @endsection
+
